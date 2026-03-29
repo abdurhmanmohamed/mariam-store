@@ -246,6 +246,42 @@
             border-bottom: 1px solid #fdf6f7;
           "
         >
+          Account
+        </li>
+        {% if current_user.is_authenticated %}
+        <li>
+          <a href="{{ url_for('analytics.analysis') }}" class="drawer-sub-item"
+            ><i class="zmdi zmdi-trending-up"></i> Analytics</a
+          >
+        </li>
+        <li>
+          <a href="{{url_for('dashboard')}}" class="drawer-sub-item"
+            ><i class="zmdi zmdi-view-dashboard"></i> Dashboard</a
+          >
+        </li>
+        <li>
+          <a href="{{url_for('register')}}" class="drawer-sub-item"
+            ><i class="zmdi zmdi-account-add"></i> Register Admin</a
+          >
+        </li>
+        {% else %}
+        <li>
+          <a href="{{url_for('login')}}" class="drawer-sub-item"
+            ><i class="zmdi zmdi-account"></i> Sign In</a
+          >
+        </li>
+        {% endif %}
+
+        <li
+          style="
+            padding: 1rem 1.5rem;
+            color: var(--accent-pink);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-bottom: 1px solid #fdf6f7;
+          "
+        >
           Shop Collection
         </li>
         <li>
@@ -295,41 +331,6 @@
           >
         </li>
 
-        <li
-          style="
-            padding: 1rem 1.5rem;
-            color: var(--accent-pink);
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-bottom: 1px solid #fdf6f7;
-          "
-        >
-          Account
-        </li>
-        {% if current_user.is_authenticated %}
-        <li>
-          <a href="{{ url_for('analytics.analysis') }}" class="drawer-sub-item"
-            ><i class="zmdi zmdi-trending-up"></i> Analytics</a
-          >
-        </li>
-        <li>
-          <a href="{{url_for('dashboard')}}" class="drawer-sub-item"
-            ><i class="zmdi zmdi-view-dashboard"></i> Dashboard</a
-          >
-        </li>
-        <li>
-          <a href="{{url_for('register')}}" class="drawer-sub-item"
-            ><i class="zmdi zmdi-account-add"></i> Register Admin</a
-          >
-        </li>
-        {% else %}
-        <li>
-          <a href="{{url_for('login')}}" class="drawer-sub-item"
-            ><i class="zmdi zmdi-account"></i> Sign In</a
-          >
-        </li>
-        {% endif %}
       </ul>
     </nav>
   </div>

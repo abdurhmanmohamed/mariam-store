@@ -1,379 +1,421 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Edit Product</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
+<head>
+    <title>Edit Product | Romaire Boutique</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icons/favicon.png') }}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Outfit:wght@400;600;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/roma-theme.css') }}">
+
     <style>
-      body {
-        margin: 0;
-        font-family: "Cairo", sans-serif;
-        background: linear-gradient(145deg, #eef2ff, #f5f7ff);
-      }
-
-      /* MAIN CONTAINER */
-      .container {
-        max-width: 1200px;
-        margin: auto;
-        padding: 50px 20px;
-      }
-
-      /* GLASS CARD */
-      .card {
-        backdrop-filter: blur(18px);
-        background: rgba(255, 255, 255, 0.75);
-        border-radius: 25px;
-        padding: 40px;
-        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 0.6s ease;
-      }
-
-      /* GRID LAYOUT */
-      .grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 50px;
-      }
-
-      @media (max-width: 900px) {
-        .grid {
-          grid-template-columns: 1fr;
+        body {
+            background: #fffbfc;
+            font-family: var(--font-body, 'Quicksand', sans-serif);
+            min-height: 100vh;
         }
-      }
 
-      /* MAIN IMAGE */
-      .main-img {
-        width: 100%;
-        height: 400px;
-        object-fit: cover;
-        border-radius: 20px;
-        transition: 0.4s ease;
-      }
-      .main-img:hover {
-        transform: scale(1.03);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      }
-
-      /* THUMBNAILS ROW */
-      .thumb-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        margin-top: 20px;
-      }
-
-      /* THUMB CARD */
-      .thumb-wrapper {
-        position: relative;
-        width: 80px;
-        height: 80px;
-        border-radius: 14px;
-        overflow: hidden;
-        cursor: pointer;
-        transition: 0.3s ease;
-        perspective: 800px;
-      }
-      .thumb-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 14px;
-        transition:
-          transform 0.5s,
-          opacity 0.3s;
-        transform-style: preserve-3d;
-      }
-
-
-      /* DELETE OVERLAY */
-      .thumb-wrapper::after {
-        pointer-events: none;
-      }
-      .thumb-wrapper:hover::after {
-        opacity: 1;
-      }
-
-      /* INPUTS */
-      .input {
-        width: 100%;
-        padding: 16px;
-        border-radius: 16px;
-        border: 1px solid #ddd;
-        margin-bottom: 20px;
-        transition: 0.3s;
-      }
-      .input:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 6px rgba(102, 126, 234, 0.15);
-      }
-
-      /* FILE UPLOAD */
-      .file-input {
-        margin-top: 20px;
-        border: 2px dashed #bbb;
-        padding: 20px;
-        text-align: center;
-        border-radius: 16px;
-        cursor: pointer;
-        transition: 0.3s;
-        font-weight: 600;
-      }
-      .file-input:hover {
-        border-color: #667eea;
-        background: #f0f4ff;
-      }
-
-      /* BUTTON */
-      .save-btn {
-        width: 100%;
-        padding: 18px;
-        border: none;
-        border-radius: 18px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        font-weight: 700;
-        font-size: 16px;
-        cursor: pointer;
-        transition: 0.4s ease;
-      }
-      .save-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 20px 45px rgba(102, 126, 234, 0.45);
-      }
-
-      /* ANIMATIONS */
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
+        .edit-hero {
+            padding: 120px 0 40px;
+            background: linear-gradient(to bottom, #fdf6f7, #fff);
+            text-align: center;
         }
-        to {
-          opacity: 1;
-          transform: translateY(0);
+
+        .edit-hero h2 {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 2.8rem;
+            color: var(--roma-text);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
         }
-      }
-      .thumb-wrapper {
-        position: relative;
-      }
 
-      .delete-btn-img {
-        position: absolute;
-        top: 6px;
-        right: 6px;
-        width: 24px;
-        height: 24px;
-        border: none;
-        border-radius: 50%;
-        background: red;
-        color: white;
-        font-size: 14px;
-        cursor: pointer;
-        z-index: 999; /* 🔥 VERY IMPORTANT */
-      }
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
 
-      /* prevent image from blocking clicks */
-      .thumb-wrapper img {
-        pointer-events: auto;
-      }
+        .back-nav {
+            margin-bottom: 35px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .btn-roma-soft {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #a09295;
+            font-weight: 800;
+            font-size: 0.9rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 12px 24px;
+            border-radius: 18px;
+            background: #fff;
+            border: 1px solid rgba(251, 203, 219, 0.2);
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(251, 203, 219, 0.1);
+        }
+
+        .btn-roma-soft:hover {
+            color: var(--roma-accent);
+            transform: translateX(-8px);
+            box-shadow: 0 8px 25px rgba(251, 203, 219, 0.25);
+            border-color: var(--roma-accent);
+        }
+
+        /* Glassmorphism Card */
+        .roma-glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 35px;
+            border: 1px solid rgba(251, 203, 219, 0.4);
+            box-shadow: 0 25px 60px rgba(251, 203, 219, 0.15);
+            padding: 50px;
+        }
+
+        .edit-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        @media (max-width: 900px) {
+            .edit-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Image Section */
+        .main-img-wrap {
+            position: relative;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        #mainImage {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .thumb-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .thumb-wrapper {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .thumb-wrapper.active {
+            border-color: var(--roma-accent);
+        }
+
+        .thumb-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .delete-btn-img {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 77, 77, 0.9);
+            color: white;
+            border: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.3s ease;
+        }
+
+        .thumb-wrapper:hover .delete-btn-img {
+            opacity: 1;
+        }
+
+        .upload-btn-wrap {
+            margin-top: 25px;
+        }
+
+        .btn-upload {
+            width: 100%;
+            padding: 15px;
+            border: 2px dashed rgba(251, 203, 219, 0.6);
+            background: #fffbfc;
+            border-radius: 20px;
+            color: #a09295;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-upload:hover {
+            border-color: var(--roma-accent);
+            background: #fff;
+            color: var(--roma-text);
+        }
+
+        /* Form Fields */
+        .roma-field {
+            margin-bottom: 25px;
+        }
+
+        .roma-field label {
+            display: block;
+            font-weight: 800;
+            color: var(--roma-text);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            font-family: var(--font-heading);
+        }
+
+        .roma-input {
+            width: 100%;
+            padding: 16px 22px;
+            background: #fff;
+            border: 1.5px solid rgba(251, 203, 219, 0.4);
+            border-radius: 20px;
+            outline: none;
+            font-family: 'Quicksand';
+            transition: 0.3s ease;
+        }
+
+        .roma-input:focus {
+            border-color: var(--roma-accent);
+            box-shadow: 0 10px 25px rgba(251, 203, 219, 0.2);
+        }
+
+        .btn-roma-save {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--roma-primary), var(--roma-primary-hover));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            font-family: var(--font-heading);
+            box-shadow: 0 15px 35px rgba(251, 203, 219, 0.4);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn-roma-save:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 45px rgba(251, 203, 219, 0.5);
+        }
+
+        @media (max-width: 600px) {
+            .roma-glass-card { padding: 30px 20px; }
+            .edit-hero h2 { font-size: 2rem; }
+            #mainImage { height: 300px; }
+        }
     </style>
-  </head>
+</head>
+<body class="animsition">
+    {% include "header.html" %}
 
-  <body>
-    <div class="container">
-      <div class="card">
-        <div class="grid">
-          <!-- LEFT SIDE -->
-          <div>
-            <img
-              id="mainImage"
-              class="main-img"
-              src="{{ item.item_imgs[0].img if item.item_imgs|length > 0 else '' }}"
-            />
-
-            <div class="thumb-container" id="thumbContainer">
-              {% for img in item.item_imgs %}
-              <div class="thumb-wrapper">
-                <img src="{{img.img}}" onclick="setMain('{{img.img}}')" />
-
-                <button
-                  class="delete-btn-img"
-                  onclick="deleteOldImage('{{img.id}}', this)"
-                >
-                  ✕
-                </button>
-              </div>
-              {% endfor %}
-            </div>
-
-            <div class="file-input mt-10">
-              <input type="file" id="newImages" multiple hidden />
-              <label for="newImages">📸 Upload New Images</label>
-            </div>
-          </div>
-
-          <!-- RIGHT SIDE -->
-          <div>
-            <input
-              id="n"
-              class="input"
-              value="{{item.name}}"
-              placeholder="Product Name"
-              style="
-                font-family: 'Cairo', sans-serif;
-                text-align: right;
-                font-size: 3 rem;
-              "
-            />
-            <input
-              id="price"
-              class="input"
-              value="{{item.price}}"
-              placeholder="Current Price"
-              style="
-                font-family: 'Cairo', sans-serif;
-                font-size: 1.2rem;
-              "
-            />
-            <input
-              id="old_price"
-              class="input"
-              value="{{item.old_price if item.old_price else ''}}"
-              placeholder="Old Price (Optional)"
-              style="
-                font-family: 'Cairo', sans-serif;
-                font-size: 1.2rem;
-              "
-            />
-            <input
-              id="discount_label"
-              class="input"
-              value="{{item.discount_label if item.discount_label else ''}}"
-              placeholder="Discount Label (e.g. 20% OFF)"
-              style="
-                font-family: 'Cairo', sans-serif;
-                font-size: 1.2rem;
-                text-align: right;
-              "
-            />
-            <textarea
-              id="desc"
-              class="input"
-              rows="5"
-              style="
-                font-family: 'Cairo', sans-serif;
-                text-align: right;
-                font-size: 3 rem;
-              "
-            >
-{{item.description}}</textarea
-            >
-            <button class="save-btn" onclick="saveEdit('{{item.id}}')">
-              Save Changes
-            </button>
-          </div>
+    <div class="edit-hero">
+        <div class="container">
+            <span class="badge rounded-pill mb-3" style="background: rgba(251, 203, 219, 0.3); color: var(--roma-accent); padding: 8px 18px; font-weight: 800;">Inventory Admin</span>
+            <h2>Edit Boutique Item</h2>
+            <p>Refine your product's story and aesthetic presentation.</p>
         </div>
-      </div>
     </div>
 
+    <div class="main-container">
+        <div class="back-nav">
+            <a href="/dashboard" class="btn-roma-soft">
+                <i class="fa fa-chevron-left"></i>
+                <span>Back to Dashboard</span>
+            </a>
+        </div>
+
+        <div class="roma-glass-card">
+            <div class="edit-grid">
+                <!-- Media Section -->
+                <div class="media-section">
+                    <div class="main-img-wrap">
+                        <img id="mainImage" src="{{ item.item_imgs[0].img if item.item_imgs|length > 0 else '' }}" alt="Product Image">
+                    </div>
+
+                    <label class="fw-bold text-muted small mb-3 d-block uppercase tracking-wider">Image Gallery</label>
+                    <div class="thumb-container" id="thumbContainer">
+                        {% for img in item.item_imgs %}
+                        <div class="thumb-wrapper">
+                            <img src="{{img.img}}" onclick="setMain('{{img.img}}')" alt="Thumbnail">
+                            <button class="delete-btn-img" onclick="deleteOldImage('{{img.id}}', this)">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="upload-btn-wrap">
+                        <input type="file" id="newImages" multiple hidden>
+                        <label for="newImages" class="btn-upload">
+                            <i class="fa fa-plus-circle"></i>
+                            <span>Upload New Images</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Fields Section -->
+                <div class="fields-section">
+                    <div class="roma-field">
+                        <label>Product Name</label>
+                        <input id="n" class="roma-input" value="{{item.name}}" placeholder="Enter product name..." style="font-family: 'Cairo'; text-align: right;">
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="roma-field">
+                                <label>Sale Price (E£)</label>
+                                <input id="price" class="roma-input" value="{{item.price}}" placeholder="0.00">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="roma-field">
+                                <label>Original Price (E£)</label>
+                                <input id="old_price" class="roma-input" value="{{item.old_price if item.old_price else ''}}" placeholder="Optional">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="roma-field">
+                        <label>Discount Label</label>
+                        <input id="discount_label" class="roma-input" value="{{item.discount_label if item.discount_label else ''}}" placeholder="e.g. 20% OFF or Hot Choice" style="font-family: 'Cairo'; text-align: right;">
+                    </div>
+
+                    <div class="roma-field">
+                        <label>Product Narrative (Description)</label>
+                        <textarea id="desc" class="roma-input" rows="6" style="font-family: 'Cairo'; text-align: right; resize: none;">{{item.description}}</textarea>
+                    </div>
+
+                    <button class="btn-roma-save" onclick="saveEdit('{{item.id}}')">
+                        <i class="fa fa-save me-2"></i> Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <!-- JS Handling -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
     <script>
-      let addedImagesData = [];
+        let addedImagesData = [];
 
-      function setMain(src) {
-        document.getElementById("mainImage").src = src;
-      }
+        function setMain(src) {
+            document.getElementById("mainImage").src = src;
+        }
 
-      function deleteOldImage(id, el) {
-        console.log("CLICK WORKED 🔥", id);
+        function deleteOldImage(id, el) {
+            if(confirm("Are you sure you want to delete this image?")) {
+                fetch(`/admin/delete-image/${id}`, { method: "POST" })
+                .then(res => res.json())
+                .then(() => {
+                    el.closest(".thumb-wrapper").style.opacity = '0';
+                    setTimeout(() => el.closest(".thumb-wrapper").remove(), 300);
+                });
+            }
+        }
 
-        fetch(`/admin/delete-image/${id}`, {
-          method: "POST",
-        })
-          .then((res) => res.json())
-          .then(() => {
-            el.closest(".thumb-wrapper").remove();
-          });
-      }
+        document.getElementById("newImages").addEventListener("change", function () {
+            [...this.files].forEach((file) => {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    const imageData = e.target.result;
+                    addedImagesData.push(imageData);
 
-      document
-        .getElementById("newImages")
-        .addEventListener("change", function () {
-          [...this.files].forEach((file) => {
-            let reader = new FileReader();
-            reader.onload = (e) => {
-              const imageData = e.target.result;
-              addedImagesData.push(imageData);
-
-              let div = document.createElement("div");
-              div.className = "thumb-wrapper";
-              // Add a way to identify and remove this image from addedImagesData
-              div.dataset.index = addedImagesData.length - 1;
-              div.innerHTML = `
-                <img src="${imageData}">
-                <button
-                  class="delete-btn-img"
-                  onclick="removeNewImage(this)"
-                >
-                  ✕
-                </button>
-              `;
-
-              document.getElementById("thumbContainer").appendChild(div);
-            };
-            reader.readAsDataURL(file);
-          });
+                    let div = document.createElement("div");
+                    div.className = "thumb-wrapper";
+                    div.innerHTML = `
+                        <img src="${imageData}">
+                        <button class="delete-btn-img" onclick="removeNewImage(this)" style="opacity: 1;">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    `;
+                    document.getElementById("thumbContainer").appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
         });
 
-      function removeNewImage(btn) {
-        const wrapper = btn.closest(".thumb-wrapper");
-        const index = parseInt(wrapper.dataset.index);
-        // We can't easily splice by index if multiple are removed, 
-        // but for simplicity we'll just filter out this specific base64 string
-        const src = wrapper.querySelector("img").src;
-        addedImagesData = addedImagesData.filter((img) => img !== src);
-        wrapper.remove();
-      }
+        function removeNewImage(btn) {
+            const wrapper = btn.closest(".thumb-wrapper");
+            const src = wrapper.querySelector("img").src;
+            addedImagesData = addedImagesData.filter((img) => img !== src);
+            wrapper.remove();
+        }
 
-      function saveEdit(id) {
-        const nameInput = document.getElementById("n");
-        const priceInput = document.getElementById("price");
-        const descInput = document.getElementById("desc");
+        function saveEdit(id) {
+            const btn = document.querySelector('.btn-roma-save');
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Saving...';
+            btn.disabled = true;
 
-        let data = {
-          n: nameInput.value,
-          price: priceInput.value,
-          old_price: document.getElementById("old_price").value,
-          discount_label: document.getElementById("discount_label").value,
-          description: descInput.value,
-          images: addedImagesData,
-        };
+            const data = {
+                n: document.getElementById("n").value,
+                price: document.getElementById("price").value,
+                old_price: document.getElementById("old_price").value,
+                discount_label: document.getElementById("discount_label").value,
+                description: document.getElementById("desc").value,
+                images: addedImagesData,
+            };
 
-        fetch(`/admin/update-item/${id}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        })
-          .then((res) => {
-            if (res.ok) {
-              alert("Updated successfully 🚀");
-              location.href = "/";
-            } else {
-              alert("Failed to update item. Please try again.");
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-            alert("An error occurred while updating.");
-          });
-      }
+            fetch(`/admin/update-item/${id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            })
+            .then(res => {
+                if (res.ok) {
+                    window.location.href = "/dashboard";
+                } else {
+                    alert("Failed to update item.");
+                    btn.innerHTML = '<i class="fa fa-save me-2"></i> Save Changes';
+                    btn.disabled = false;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("An error occurred.");
+                btn.innerHTML = '<i class="fa fa-save me-2"></i> Save Changes';
+                btn.disabled = false;
+            });
+        }
     </script>
-  </body>
+</body>
 </html>

@@ -113,19 +113,21 @@
             flex: 1;
             border: none;
             background: transparent;
-            padding: 15px;
-            border-radius: 15px;
+            padding: 14px;
+            border-radius: 16px;
             font-weight: 800;
-            color: #a09295;
+            color: #b0a4a7;
             font-family: var(--font-heading);
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
+            letter-spacing: 0.5px;
         }
 
         .roma-tab-btn.active {
             background: white;
             color: var(--roma-text);
-            box-shadow: 0 8px 20px rgba(251, 203, 219, 0.15);
+            box-shadow: 0 10px 25px rgba(251, 203, 219, 0.2);
+            transform: translateY(-2px);
         }
 
         /* Content Area */
@@ -145,22 +147,24 @@
 
         /* Order Cards */
         .roma-order-card {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(251, 203, 219, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+            padding: 28px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(251, 203, 219, 0.3);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: pointer;
+            box-shadow: 0 8px 20px rgba(251, 203, 219, 0.05);
         }
 
         .roma-order-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.01);
             border-color: var(--roma-accent);
-            box-shadow: 0 15px 35px rgba(251, 203, 219, 0.25);
+            box-shadow: 0 20px 45px rgba(251, 203, 219, 0.3);
+            background: #fff;
         }
 
         .order-info h3 {
@@ -188,27 +192,32 @@
         .order-price {
             font-weight: 800;
             color: var(--roma-accent);
-            font-size: 1.1rem;
+            font-size: 1.25rem;
+            background: rgba(251, 203, 219, 0.1);
+            padding: 6px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(251, 203, 219, 0.2);
         }
 
         .btn-settle {
-            background: #fdf6f7;
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            padding: 8px 18px;
-            border-radius: 12px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 14px;
             font-weight: 800;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
+            gap: 10px;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.25);
         }
 
         .btn-settle:hover {
-            background: #10b981;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
             color: white;
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
         }
 
         /* Settlement Specific Fly-out */
