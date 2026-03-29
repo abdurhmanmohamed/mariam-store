@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Privacy Policy - Heba Fashion Shop</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Existing Styles -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/util.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/custom.css') }}"
+    />
+
+    <style>
+      body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        font-family: "Poppins", sans-serif;
+        color: #333;
+      }
+
+      .policy-container {
+        padding: 80px 15px;
+        max-width: 900px;
+        margin: auto;
+      }
+
+      .policy-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 50px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .policy-header {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .policy-header h1 {
+        font-family: "Cairo", sans-serif;
+        font-weight: 800;
+        color: #111;
+        margin-bottom: 15px;
+        font-size: 2.5rem;
+      }
+
+      .policy-header .subtitle {
+        color: #c4301c;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.9rem;
+      }
+
+      .policy-section {
+        margin-bottom: 40px;
+      }
+
+      .policy-section h2 {
+        font-family: "Cairo", sans-serif;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: #222;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      .policy-section h2 i {
+        margin-right: 15px;
+        color: #c4301c;
+        width: 30px;
+        text-align: center;
+      }
+
+      .policy-content {
+        padding-left: 45px;
+        line-height: 1.8;
+        color: #555;
+      }
+
+      @media (max-width: 600px) {
+        .policy-card {
+          padding: 30px 20px;
+        }
+        .policy-header h1 {
+          font-size: 1.8rem;
+        }
+        .policy-content {
+          padding-left: 0;
+        }
+      }
+
+      /* ODD STYLED BACK BUTTON - SMALLER */
+      .back-home-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: #111;
+        color: #fff;
+        padding: 8px 18px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        z-index: 9999;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+      }
+
+      .back-home-btn i {
+        margin-right: 8px;
+        font-size: 1rem;
+        transition: transform 0.4s;
+      }
+
+      .back-home-btn:hover {
+        background: #c4301c;
+        color: #fff;
+        transform: scale(1.1) rotate(-2deg);
+        box-shadow: 0 15px 30px rgba(196, 48, 28, 0.4);
+      }
+
+      .back-home-btn:hover i {
+        transform: translateX(-5px);
+      }
+
+      .back-home-btn span {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body class="animsition">
+    <!-- UNIQUE BACK TO HOME BUTTON -->
+    <a href="/" class="back-home-btn">
+      <i class="fa fa-long-arrow-left"></i>
+      <span>Back to Home</span>
+    </a>
+
+    <div class="policy-container">
+      <div class="policy-card">
+        <div class="policy-header">
+          <div class="subtitle">Legal</div>
+          <h1>Privacy Policy</h1>
+          <p>Your privacy is important to us.</p>
+        </div>
+
+        <div class="policy-section">
+          <h2><i class="fa fa-shield"></i> Information Collection</h2>
+          <div class="policy-content">
+            <p>
+              We collect information you provide directly to us when you make a
+              purchase, including your name, shipping address, and contact
+              details. This information is used solely to process and deliver
+              your orders.
+            </p>
+          </div>
+        </div>
+
+        <div class="policy-section">
+          <h2><i class="fa fa-lock"></i> Data Security</h2>
+          <div class="policy-content">
+            <p>
+              We implement a variety of security measures to maintain the safety
+              of your personal information. Your sensitive data is encrypted and
+              protected by industry-standard protocols.
+            </p>
+          </div>
+        </div>
+
+        <div class="policy-section">
+          <h2><i class="fa fa-user-secret"></i> Third-Party Sharing</h2>
+          <div class="policy-content">
+            <p>
+              We do not sell, trade, or otherwise transfer your personally
+              identifiable information to outside parties, except for trusted
+              third parties who assist us in operating our website and
+              fulfilling your orders (e.g., shipping companies).
+            </p>
+          </div>
+        </div>
+
+        <div class="policy-section">
+          <h2><i class="fa fa-cookie"></i> Cookies</h2>
+          <div class="policy-content">
+            <p>
+              Our website uses cookies to enhance your shopping experience and
+              remember your cart items. You can choose to disable cookies
+              through your browser settings if you prefer.
+            </p>
+          </div>
+        </div>
+
+        <div class="policy-section">
+          <h2><i class="fa fa-envelope"></i> Contact Us</h2>
+          <div class="policy-content">
+            <p>
+              If you have any questions regarding this privacy policy, you may
+              contact us at <strong>01129792139‏</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

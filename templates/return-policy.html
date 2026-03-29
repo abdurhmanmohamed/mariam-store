@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Return & Exchange Policy - Heba Fashion Shop</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Existing Styles -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/util.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/custom.css') }}"
+    />
+
+    <style>
+      body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        font-family: "Poppins", sans-serif;
+        color: #333;
+      }
+
+      .policy-container {
+        padding: 80px 15px;
+        max-width: 900px;
+        margin: auto;
+      }
+
+      .policy-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 50px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .policy-header {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .policy-header h1 {
+        font-family: "Cairo", sans-serif;
+        font-weight: 800;
+        color: #111;
+        margin-bottom: 15px;
+        font-size: 2.5rem;
+      }
+
+      .policy-header .subtitle {
+        color: #c4301c;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.9rem;
+      }
+
+      .policy-section {
+        margin-bottom: 40px;
+      }
+
+      .policy-section h2 {
+        font-family: "Cairo", sans-serif;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: #222;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      .policy-section h2 i {
+        margin-right: 15px;
+        color: #c4301c;
+        width: 30px;
+        text-align: center;
+      }
+
+      .policy-content {
+        padding-left: 45px;
+      }
+
+      .policy-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .policy-list li {
+        margin-bottom: 12px;
+        position: relative;
+        padding-left: 20px;
+        line-height: 1.6;
+      }
+
+      .policy-list li::before {
+        content: "•";
+        color: #c4301c;
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+      }
+
+      .policy-step {
+        display: flex;
+        margin-bottom: 20px;
+        background: #fff;
+        padding: 15px;
+        border-radius: 12px;
+        border-left: 4px solid #c4301c;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+      }
+
+      .step-number {
+        font-weight: 800;
+        color: #c4301c;
+        font-size: 1.2rem;
+        margin-right: 20px;
+        min-width: 25px;
+      }
+
+      .contact-box {
+        background: #f0f7ff;
+        border-radius: 12px;
+        padding: 25px;
+        margin-top: 50px;
+        border: 1px solid #d0e6ff;
+        text-align: center;
+      }
+
+      .contact-box strong {
+        color: #c4301c;
+        font-size: 1.2rem;
+      }
+
+      .footer-note {
+        text-align: center;
+        margin-top: 30px;
+        font-style: italic;
+        color: #777;
+      }
+
+      @media (max-width: 600px) {
+        .policy-card {
+          padding: 30px 20px;
+        }
+        .policy-header h1 {
+          font-size: 1.8rem;
+        }
+        .policy-content {
+          padding-left: 0;
+        }
+      }
+
+      /* ODD STYLED BACK BUTTON - SMALLER */
+      .back-home-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: #111;
+        color: #fff;
+        padding: 8px 18px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        z-index: 9999;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+      }
+
+      .back-home-btn i {
+        margin-right: 8px;
+        font-size: 1.1rem;
+        transition: transform 0.4s;
+      }
+
+      .back-home-btn:hover {
+        background: #c4301c;
+        color: #fff;
+        transform: scale(1.1) rotate(-2deg);
+        box-shadow: 0 15px 30px rgba(196, 48, 28, 0.4);
+      }
+
+      .back-home-btn:hover i {
+        transform: translateX(-5px);
+      }
+
+      .back-home-btn span {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body class="animsition">
+    <!-- UNIQUE BACK TO HOME BUTTON -->
+    <a href="/" class="back-home-btn">
+      <i class="fa fa-long-arrow-left"></i>
+      <span>Back to Home</span>
+    </a>
+
+    <div class="policy-container">
+      <div class="policy-card">
+        <div class="policy-header">
+          <div class="subtitle">Customer Care</div>
+          <h1>Return & Exchange Policy</h1>
+          <p>
+            We want you to love your
+            <strong
+              ><a href="https://www.facebook.com/profile.php?id=100064268521977"
+                >Heba Fashion Shop</a
+              ></strong
+            >
+            purchase.
+          </p>
+        </div>
+
+        <!-- SECTION 1 -->
+        <div class="policy-section">
+          <h2><i class="fa fa-check-circle"></i> 1. Return Requirements</h2>
+          <div class="policy-content">
+            <ul class="policy-list">
+              <li>
+                <strong>Timeframe:</strong> Returns accepted within 10 days of
+                purchase
+              </li>
+              <li>
+                <strong>Condition:</strong> Items must be unworn, undamaged,
+                with all original tags and packaging
+              </li>
+              <li>
+                <strong>Exceptions:</strong> Worn, altered, or damaged items
+                cannot be returned
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div class="policy-section">
+          <h2><i class="fa fa-refresh"></i> 2. Exchange Options</h2>
+          <div class="policy-content">
+            <ul class="policy-list">
+              <li>
+                <strong>Timeframe:</strong> Exchange requests must be made
+                within 10 days of purchase
+              </li>
+              <li>
+                <strong>Options:</strong> Available for size, color, or style
+                changes (subject to stock availability)
+              </li>
+              <li>
+                <strong>Alternatives:</strong> If your preferred item is
+                unavailable, we’ll offer a refund or help you select a different
+                product
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="policy-section">
+          <h2><i class="fa fa-truck"></i> 3. How to Return</h2>
+          <div class="policy-content">
+            <div class="policy-step">
+              <span class="step-number">1.</span>
+              <div>
+                Contact us at <strong>01129792139‏</strong> with your order
+                details and reason for return
+              </div>
+            </div>
+            <div class="policy-step">
+              <span class="step-number">2.</span>
+              <div>Wait for our authorization and return instructions</div>
+            </div>
+            <div class="policy-step">
+              <span class="step-number">3.</span>
+              <div>
+                <strong>Note:</strong> Customers cover return shipping unless
+                the return results from our error
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4 -->
+        <div class="policy-section">
+          <h2><i class="fa fa-money"></i> 4. Refund Details</h2>
+          <div class="policy-content">
+            <ul class="policy-list">
+              <li>
+                <strong>Timing:</strong> Processed within 3-5 business days
+                after we receive your return
+              </li>
+              <li>
+                <strong>Method:</strong> Credited back to your original payment
+                account
+              </li>
+              <li>
+                <strong>Shipping Costs:</strong> Original delivery fees aren’t
+                refundable (except for our mistakes)
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div class="policy-section">
+          <h2>
+            <i class="fa fa-exclamation-triangle"></i> 5. Problem with Your
+            Order?
+          </h2>
+          <div class="policy-content">
+            <p>If you receive a defective or damaged item:</p>
+            <ul class="policy-list">
+              <li>Contact us immediately at <strong>01129792139‏</strong></li>
+              <li>Include photos showing the issue</li>
+              <li>We’ll arrange a replacement or full refund</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="contact-box">
+          <p>
+            Our customer service team is happy to help with any questions – just
+            contact <strong>01129792139‏</strong>
+          </p>
+          <p class="mt-2">
+            Thank you for choosing
+            <strong
+              ><a href="https://www.facebook.com/profile.php?id=100064268521977"
+                >Heba Fashion Shop</a
+              ></strong
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

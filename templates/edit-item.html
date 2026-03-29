@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Edit Product</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Cairo", sans-serif;
+        background: linear-gradient(145deg, #eef2ff, #f5f7ff);
+      }
+
+      /* MAIN CONTAINER */
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 50px 20px;
+      }
+
+      /* GLASS CARD */
+      .card {
+        backdrop-filter: blur(18px);
+        background: rgba(255, 255, 255, 0.75);
+        border-radius: 25px;
+        padding: 40px;
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.6s ease;
+      }
+
+      /* GRID LAYOUT */
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+      }
+
+      @media (max-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* MAIN IMAGE */
+      .main-img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 20px;
+        transition: 0.4s ease;
+      }
+      .main-img:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      /* THUMBNAILS ROW */
+      .thumb-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      /* THUMB CARD */
+      .thumb-wrapper {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        border-radius: 14px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: 0.3s ease;
+        perspective: 800px;
+      }
+      .thumb-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 14px;
+        transition:
+          transform 0.5s,
+          opacity 0.3s;
+        transform-style: preserve-3d;
+      }
+
+
+      /* DELETE OVERLAY */
+      .thumb-wrapper::after {
+        pointer-events: none;
+      }
+      .thumb-wrapper:hover::after {
+        opacity: 1;
+      }
+
+      /* INPUTS */
+      .input {
+        width: 100%;
+        padding: 16px;
+        border-radius: 16px;
+        border: 1px solid #ddd;
+        margin-bottom: 20px;
+        transition: 0.3s;
+      }
+      .input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 6px rgba(102, 126, 234, 0.15);
+      }
+
+      /* FILE UPLOAD */
+      .file-input {
+        margin-top: 20px;
+        border: 2px dashed #bbb;
+        padding: 20px;
+        text-align: center;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 600;
+      }
+      .file-input:hover {
+        border-color: #667eea;
+        background: #f0f4ff;
+      }
+
+      /* BUTTON */
+      .save-btn {
+        width: 100%;
+        padding: 18px;
+        border: none;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.4s ease;
+      }
+      .save-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 45px rgba(102, 126, 234, 0.45);
+      }
+
+      /* ANIMATIONS */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .thumb-wrapper {
+        position: relative;
+      }
+
+      .delete-btn-img {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 24px;
+        height: 24px;
+        border: none;
+        border-radius: 50%;
+        background: red;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        z-index: 999; /* 🔥 VERY IMPORTANT */
+      }
+
+      /* prevent image from blocking clicks */
+      .thumb-wrapper img {
+        pointer-events: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="grid">
+          <!-- LEFT SIDE -->
+          <div>
+            <img
+              id="mainImage"
+              class="main-img"
+              src="{{ item.item_imgs[0].img if item.item_imgs|length > 0 else '' }}"
+            />
+
+            <div class="thumb-container" id="thumbContainer">
+              {% for img in item.item_imgs %}
+              <div class="thumb-wrapper">
+                <img src="{{img.img}}" onclick="setMain('{{img.img}}')" />
+
+                <button
+                  class="delete-btn-img"
+                  onclick="deleteOldImage('{{img.id}}', this)"
+                >
+                  ✕
+                </button>
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="file-input mt-10">
+              <input type="file" id="newImages" multiple hidden />
+              <label for="newImages">📸 Upload New Images</label>
+            </div>
+          </div>
+
+          <!-- RIGHT SIDE -->
+          <div>
+            <input
+              id="n"
+              class="input"
+              value="{{item.name}}"
+              placeholder="Product Name"
+              style="
+                font-family: 'Cairo', sans-serif;
+                text-align: right;
+                font-size: 3 rem;
+              "
+            />
+            <input
+              id="price"
+              class="input"
+              value="{{item.price}}"
+              placeholder="Current Price"
+              style="
+                font-family: 'Cairo', sans-serif;
+                font-size: 1.2rem;
+              "
+            />
+            <input
+              id="old_price"
+              class="input"
+              value="{{item.old_price if item.old_price else ''}}"
+              placeholder="Old Price (Optional)"
+              style="
+                font-family: 'Cairo', sans-serif;
+                font-size: 1.2rem;
+              "
+            />
+            <input
+              id="discount_label"
+              class="input"
+              value="{{item.discount_label if item.discount_label else ''}}"
+              placeholder="Discount Label (e.g. 20% OFF)"
+              style="
+                font-family: 'Cairo', sans-serif;
+                font-size: 1.2rem;
+                text-align: right;
+              "
+            />
+            <textarea
+              id="desc"
+              class="input"
+              rows="5"
+              style="
+                font-family: 'Cairo', sans-serif;
+                text-align: right;
+                font-size: 3 rem;
+              "
+            >
+{{item.description}}</textarea
+            >
+            <button class="save-btn" onclick="saveEdit('{{item.id}}')">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let addedImagesData = [];
+
+      function setMain(src) {
+        document.getElementById("mainImage").src = src;
+      }
+
+      function deleteOldImage(id, el) {
+        console.log("CLICK WORKED 🔥", id);
+
+        fetch(`/admin/delete-image/${id}`, {
+          method: "POST",
+        })
+          .then((res) => res.json())
+          .then(() => {
+            el.closest(".thumb-wrapper").remove();
+          });
+      }
+
+      document
+        .getElementById("newImages")
+        .addEventListener("change", function () {
+          [...this.files].forEach((file) => {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+              const imageData = e.target.result;
+              addedImagesData.push(imageData);
+
+              let div = document.createElement("div");
+              div.className = "thumb-wrapper";
+              // Add a way to identify and remove this image from addedImagesData
+              div.dataset.index = addedImagesData.length - 1;
+              div.innerHTML = `
+                <img src="${imageData}">
+                <button
+                  class="delete-btn-img"
+                  onclick="removeNewImage(this)"
+                >
+                  ✕
+                </button>
+              `;
+
+              document.getElementById("thumbContainer").appendChild(div);
+            };
+            reader.readAsDataURL(file);
+          });
+        });
+
+      function removeNewImage(btn) {
+        const wrapper = btn.closest(".thumb-wrapper");
+        const index = parseInt(wrapper.dataset.index);
+        // We can't easily splice by index if multiple are removed, 
+        // but for simplicity we'll just filter out this specific base64 string
+        const src = wrapper.querySelector("img").src;
+        addedImagesData = addedImagesData.filter((img) => img !== src);
+        wrapper.remove();
+      }
+
+      function saveEdit(id) {
+        const nameInput = document.getElementById("n");
+        const priceInput = document.getElementById("price");
+        const descInput = document.getElementById("desc");
+
+        let data = {
+          n: nameInput.value,
+          price: priceInput.value,
+          old_price: document.getElementById("old_price").value,
+          discount_label: document.getElementById("discount_label").value,
+          description: descInput.value,
+          images: addedImagesData,
+        };
+
+        fetch(`/admin/update-item/${id}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((res) => {
+            if (res.ok) {
+              alert("Updated successfully 🚀");
+              location.href = "/";
+            } else {
+              alert("Failed to update item. Please try again.");
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            alert("An error occurred while updating.");
+          });
+      }
+    </script>
+  </body>
+</html>
