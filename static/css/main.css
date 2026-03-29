@@ -130,26 +130,59 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   transform: translate(-50%, -50%);
 }
 
-.loader05 {
-  width: 56px;
-  height: 56px;
-  border: 4px solid #717fe0;
-  border-radius: 50%;
-  position: relative;
-  animation: loader-scale 1s ease-out infinite;
-  top: 50%;
-  margin: -28px auto 0 auto; 
+/* Romaire Boutique Premium Loader */
+.animsition-loading-1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 99999;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes loader-scale {
-  0% {
-    transform: scale(0);
-    opacity: 0; }
-  50% {
-    opacity: 1; }
-  100% {
-    transform: scale(1);
-    opacity: 0; } 
+.loader05 {
+  width: 80px;
+  height: 80px;
+  border: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FBCBDB 0%, rgba(251, 203, 219, 0) 75%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: romaire-pulse 1.8s ease-in-out infinite;
+  box-shadow: 0 0 50px rgba(251, 203, 219, 0.3);
+  margin: 0 !important;
+}
+
+.loader05::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  border: 2px solid #FBCBDB;
+  border-radius: 50%;
+  border-top-color: transparent;
+  border-left-color: rgba(251, 203, 219, 0.3);
+  animation: romaire-spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  margin: -22px 0 0 -22px;
+}
+
+@keyframes romaire-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.6; }
+  50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+}
+
+@keyframes romaire-spin {
+  to { transform: rotate(360deg); }
 }
 
 /*//////////////////////////////////////////////////////////////////
