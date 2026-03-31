@@ -13,7 +13,7 @@ from sqlalchemy import DateTime, String, Integer,ForeignKey
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from flask_login import LoginManager,UserMixin,login_user, login_required,current_user,logout_user
-from analytics_blueprint import analytics_bp
+# from analytics_blueprint import analytics_bp
 from flask_compress import Compress
 from flask_caching import Cache
 from sqlalchemy.orm import joinedload
@@ -22,7 +22,7 @@ app= Flask(__name__)
 Compress(app)
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache', 'CACHE_DEFAULT_TIMEOUT': 300})
 
-app.register_blueprint(analytics_bp)
+# app.register_blueprint(analytics_bp)
 login_manager = LoginManager(app)
 app.secret_key='abdomohamed'
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres.faossrhfekblsmausrte:Romaire_marim@aws-1-eu-central-1.pooler.supabase.com:6543/postgres"
@@ -53,6 +53,7 @@ class ItemDetails(db.Model):
     old_price:Mapped[int] = mapped_column(Integer, nullable=True)
     discount_label:Mapped[str] = mapped_column(String(50), nullable=True)
     visability:Mapped[int] = mapped_column(Integer, nullable=False,default=1)
+    category:Mapped[str] = mapped_column(String(50), nullable=True, default='')
     item_colors = relationship('ItemColor',backref='deltails')
     item_imgs = relationship('ItemImg',backref='deltails')
 
@@ -121,9 +122,17 @@ with app.app_context():
         from sqlalchemy import text
         db.session.execute(text('ALTER TABLE "order" ADD COLUMN total_price INTEGER'))
         db.session.commit()
-        print("Successfully added total_price column to order table!")
+    except Exception:
+        db.session.rollback()
+
+    try:
+        from sqlalchemy import text
+        db.session.execute(text("ALTER TABLE itemdetails ADD COLUMN IF NOT EXISTS category VARCHAR(50) DEFAULT ''"))
+        db.session.commit()
+        print("✅ category column ready.")
     except Exception as e:
         db.session.rollback()
+        print(f"⚠️ category migration: {e}")
 
 
 @login_manager.user_loader
@@ -245,9 +254,11 @@ def check_out():
         selected_city_price = ShippingPrice.query.filter_by(city=request.form['city']).first()
         shipping_cost = selected_city_price.price if selected_city_price else 0
 
-        final_total = total_price + shipping_cost
-        if total_amount >= 2:
-            final_total -= 50
+        discount = 0
+        if total_price >= 300:
+            discount = total_price * 0.1
+        
+        final_total = (total_price - discount) + shipping_cost
 
         order = Order(
             name = request.form['fullname'],
@@ -549,7 +560,8 @@ def add_item():
    
     new_item = ItemDetails(name=name, price=price, description=description,
                            old_price=int(old_price) if old_price else None,
-                           discount_label=discount_label)
+                           discount_label=discount_label,
+                           category=data.get("category", "") or "")
     db.session.add(new_item)
     db.session.commit()  # commit once to get new_item.id
 
@@ -621,6 +633,7 @@ def update_item(id):
     item.description = description
     item.old_price = int(old_price) if old_price else None
     item.discount_label = discount_label
+    item.category = data.get("category", "") or ""
 
     # handle colors
     colors = data.get("colors", [])
@@ -664,5 +677,64 @@ def update_item(id):
     cache.clear()  # Invalidate home/shop cache immediately
 
     return jsonify({"status": "success"})
+
+@app.route("/admin/analysis")
+@login_required
+def admin_analysis():
+    from sqlalchemy import func
+    from datetime import datetime, timedelta
+    
+    # 1. Total Stats
+    total_orders = Order.query.count()
+    total_revenue = db.session.query(func.sum(Order.total_price)).scalar() or 0
+    
+    # 2. State Breakdown (Pie/Doughnut)
+    states = db.session.query(Order.state, func.count(Order.id)).group_by(Order.state).all()
+    state_labels = [s[0].capitalize() for s in states]
+    state_data = [s[1] for s in states]
+    
+    # 3. City Revenue (Doughnut)
+    cities = db.session.query(Order.city, func.sum(Order.total_price)).group_by(Order.city).order_by(func.sum(Order.total_price).desc()).limit(7).all()
+    city_labels = [c[0] for c in cities]
+    city_data = [int(c[1] or 0) for c in cities]
+    
+    # 4. Weekly Revenue & Orders (Line/Bar)
+    # Get last 8 weeks of data
+    eight_weeks_ago = datetime.utcnow() - timedelta(weeks=8)
+    weekly_data = db.session.query(
+        Order.created_at, 
+        Order.total_price
+    ).filter(Order.created_at >= eight_weeks_ago).all()
+    
+    # Group in Python for cross-DB compatibility (SQLite vs Postgres date functions)
+    weeks = {}
+    for i in range(8):
+        start_of_week = (datetime.utcnow() - timedelta(weeks=i)).isocalendar()[1]
+        weeks[start_of_week] = {"rev": 0, "ord": 0}
+        
+    for o_date, o_price in weekly_data:
+        w_num = o_date.isocalendar()[1]
+        if w_num in weeks:
+            weeks[w_num]["rev"] += (o_price or 0)
+            weeks[w_num]["ord"] += 1
+            
+    # Sort weeks chronologically
+    sorted_weeks = sorted(weeks.items())
+    weekly_labels = [f"Week {w[0]}" for w in sorted_weeks]
+    weekly_rev_data = [w[1]["rev"] for w in sorted_weeks]
+    weekly_ord_data = [w[1]["ord"] for w in sorted_weeks]
+    
+    charts_data = {
+        "state_breakdown": {"labels": state_labels, "data": state_data},
+        "city_revenue": {"labels": city_labels, "data": city_data},
+        "weekly_revenue": {"labels": weekly_labels, "data": weekly_rev_data},
+        "weekly_orders": {"labels": weekly_labels, "data": weekly_ord_data}
+    }
+    
+    import json
+    return render_template("analysis.html", 
+                           total_orders=total_orders, 
+                           total_revenue=int(total_revenue),
+                           charts_data=json.dumps(charts_data))
 if __name__ == '__main__':
     app.run(debug=True)

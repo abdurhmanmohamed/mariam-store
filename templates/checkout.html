@@ -172,14 +172,31 @@
         .discount-badge {
             background: #fff5f5;
             color: #ff4d4d;
+            padding: 12px 15px;
+            border-radius: 15px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            margin-top: 5px;
+            border: 1px solid rgba(255, 77, 77, 0.1);
+        }
+
+        .shipping-notice {
+            background: #f0f7ff;
+            color: #007bff;
             padding: 10px 15px;
             border-radius: 12px;
             font-size: 0.85rem;
             font-weight: 700;
-            display: flex;
+            display: none;
             align-items: center;
             gap: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-family: 'Cairo', sans-serif;
+            border: 1px solid rgba(0, 123, 255, 0.1);
         }
 
         .payment-pill {
@@ -320,17 +337,22 @@
                                 <span class="val">{{ items_num }}</span>
                             </div>
 
-                            {% if items_num and items_num >= 2 %}
+                            {% if total_price and total_price >= 300 %}
                             <div class="discount-badge">
                                 <i class="fa fa-gift"></i>
-                                <span>Special Offer: 50 E£ discount applied!</span>
+                                <span>Special Offer: 10% discount applied for orders over 300 E£!</span>
                             </div>
                             {% endif %}
 
+                            {% set discount = 0 %}
+                            {% if total_price and total_price >= 300 %}
+                                {% set discount = total_price * 0.1 %}
+                            {% endif %}
+                            {% set subtotal = total_price - discount %}
                             <div class="summary-item">
                                 <span>Subtotal</span>
-                                <span class="val" id="subtotal" data-base="{% if items_num and items_num >= 2 %}{{ total_price - 50 }}{% else %}{{ total_price }}{% endif %}">
-                                    {% if items_num and items_num >= 2 %}{{ total_price - 50 }}{% else %}{{ total_price }}{% endif %} E£
+                                <span class="val" id="subtotal" data-base="{{ subtotal|int }}">
+                                    {{ subtotal|int }} E£
                                 </span>
                             </div>
 
@@ -339,9 +361,14 @@
                                 <span class="val" id="shipping-display">---</span>
                             </div>
 
+                            <div id="shipping-msg-badge" class="shipping-notice">
+                                <i class="fa fa-info-circle"></i>
+                                <span>يضاف اليها مصاريف الشحن مع المندوب</span>
+                            </div>
+
                             <div class="summary-item total">
                                 <span>Total Amount</span>
-                                <span class="price-val" id="final-total">{% if items_num and items_num >= 2 %}{{ total_price - 50 }}{% else %}{{ total_price }}{% endif %} E£</span>
+                                <span class="price-val" id="final-total">{{ subtotal|int }} E£</span>
                             </div>
 
                             <div class="payment-pill">
@@ -381,6 +408,13 @@
                 
                 $('#shipping-display').text(shippingPrice + ' E£').css('color', 'var(--roma-accent)');
                 $('#final-total').text(total + ' E£');
+
+                // Show/hide message if shipping is 0
+                if (shippingPrice === 0) {
+                    $('#shipping-msg-badge').css('display', 'flex');
+                } else {
+                    $('#shipping-msg-badge').css('display', 'none');
+                }
             });
 
             // Input "has-value" utility for labels

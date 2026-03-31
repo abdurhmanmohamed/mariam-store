@@ -156,6 +156,14 @@
         // Auto-filter based on URL parameter
         var urlParams = new URLSearchParams(window.location.search);
         var filter = urlParams.get('filter');
+
+        // Also support ?category=lip/body/nail links (footer & side menu)
+        var categoryParam = urlParams.get('category');
+        if (categoryParam) {
+            var catMap = { lip: '.Lip', body: '.Body', nail: '.Nail' };
+            filter = catMap[categoryParam.toLowerCase()] || filter;
+        }
+
         if (filter) {
             $topeContainer.isotope({ filter: filter });
             // Update active state

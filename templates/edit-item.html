@@ -319,6 +319,16 @@
                     </div>
 
                     <div class="roma-field">
+                        <label>Product Category</label>
+                        <select id="category" class="roma-input" style="font-family: 'Cairo';">
+                            <option value="">-- Select Category --</option>
+                            <option value="Lip" {% if item.category == 'Lip' %}selected{% endif %}>💄 Lip Products</option>
+                            <option value="Body" {% if item.category == 'Body' %}selected{% endif %}>🌿 Body Products</option>
+                            <option value="Nail" {% if item.category == 'Nail' %}selected{% endif %}>💅 Nail Products</option>
+                        </select>
+                    </div>
+
+                    <div class="roma-field">
                         <label>Product Narrative (Description)</label>
                         <textarea id="desc" class="roma-input" rows="6" style="font-family: 'Cairo'; text-align: right; resize: none;">{{item.description}}</textarea>
                     </div>
@@ -414,6 +424,7 @@
                 old_price: document.getElementById("old_price").value,
                 discount_label: document.getElementById("discount_label").value,
                 description: document.getElementById("desc").value,
+                category: document.getElementById("category").value,
                 images: addedImagesData,
                 colors: colors
             };

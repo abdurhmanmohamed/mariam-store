@@ -364,6 +364,13 @@
       .manage-shipping:hover {
         box-shadow: 0 14px 28px rgba(251, 203, 219, 0.4);
       }
+      .manage-analysis {
+        background: linear-gradient(135deg, #6366f1, #4338ca);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
+      }
+      .manage-analysis:hover {
+        box-shadow: 0 14px 28px rgba(99, 102, 241, 0.4);
+      }
 
       /* Premium Order Card Buttons */
       .order-btn {
@@ -665,6 +672,9 @@
         </a>
         <a href="/admin/shipping" class="manage-btn manage-shipping">
           <i class="fa fa-truck"></i> Manage Shipping Prices
+        </a>
+        <a href="{{ url_for('admin_analysis') }}" class="manage-btn manage-analysis">
+          <i class="fa fa-line-chart"></i> Business Insights
         </a>
       </div>
       <div class="top-buttons">

@@ -265,6 +265,7 @@
             old_price: oldPrice,
             discount_label: discountLabel,
             description: desc,
+            category: $("#itemCategory").val() || "",
             images: images,
             colors: colors,
         };

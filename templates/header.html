@@ -129,17 +129,17 @@
           <div class="girly-dropdown-divider"></div>
           <div class="girly-dropdown-header">Categories</div>
           <li>
-            <a href="{{url_for('shop')}}?filter=.جيبه"
+            <a href="{{url_for('shop')}}?category=lip"
               ><i class="fa fa-magic"></i> Lip Products (منتجات الشفاه)</a
             >
           </li>
           <li>
-            <a href="{{url_for('shop')}}?filter=.شميز"
+            <a href="{{url_for('shop')}}?category=body"
               ><i class="fa fa-leaf"></i> Body Products (منتجات الجسم)</a
             >
           </li>
           <li>
-            <a href="{{url_for('shop')}}?filter=.بنطلون"
+            <a href="{{url_for('shop')}}?category=nail"
               ><i class="fa fa-paint-brush"></i> Nail Products (منتجات
               الأظافر)</a
             >
@@ -169,7 +169,7 @@
 
       {% if current_user.is_authenticated %}
       <a
-        href="{{ url_for('analytics.analysis') }}"
+        href="{{ url_for('admin_analysis') }}"
         class="girly-icon-btn desktop-only"
         title="Analytics"
       >
@@ -264,7 +264,7 @@
       </li>
       {% if current_user.is_authenticated %}
       <li>
-        <a href="{{ url_for('analytics.analysis') }}" class="drawer-sub-item"
+        <a href="{{ url_for('admin_analysis') }}" class="drawer-sub-item"
           ><i class="zmdi zmdi-trending-up"></i> Analytics</a
         >
       </li>
@@ -304,14 +304,12 @@
         >
       </li>
       <li>
-        <a href="{{url_for('shop')}}?filter=.hot-price" class="drawer-sub-item"
+        <a href="{{url_for('shop')}}?category=hot" class="drawer-sub-item"
           ><i class="fa fa-fire"></i> Hot Prices</a
         >
       </li>
       <li>
-        <a
-          href="{{url_for('shop')}}?filter=.top-selling"
-          class="drawer-sub-item"
+        <a href="{{url_for('shop')}}?category=top" class="drawer-sub-item"
           ><i class="fa fa-star"></i> Top Selling</a
         >
       </li>
@@ -328,17 +326,17 @@
         Categories
       </li>
       <li>
-        <a href="{{url_for('shop')}}?filter=.جيبه" class="drawer-sub-item"
+        <a href="{{url_for('shop')}}?category=lip" class="drawer-sub-item"
           ><i class="fa fa-magic"></i> Lip Products</a
         >
       </li>
       <li>
-        <a href="{{url_for('shop')}}?filter=.شميز" class="drawer-sub-item"
+        <a href="{{url_for('shop')}}?category=body" class="drawer-sub-item"
           ><i class="fa fa-leaf"></i> Body Products</a
         >
       </li>
       <li>
-        <a href="{{url_for('shop')}}?filter=.بنطلون" class="drawer-sub-item"
+        <a href="{{url_for('shop')}}?category=nail" class="drawer-sub-item"
           ><i class="fa fa-paint-brush"></i> Nail Products</a
         >
       </li>
