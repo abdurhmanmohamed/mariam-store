@@ -516,6 +516,113 @@ $('.btn-num-product-up').on('click', function(){
 
         setActiveColorChip($('#color').val());
     }
+    
+    // Render all variant colors as visible, clickable chips inside the quick-view modal.
+    function colorLabelToCss(label) {
+        const raw = (label || '').trim();
+        const s = raw.toLowerCase();
+
+        const map = {
+            red: '#ef4444',
+            blue: '#3b82f6',
+            black: '#111827',
+            white: '#f9fafb',
+            gray: '#9ca3af',
+            grey: '#9ca3af',
+            green: '#22c55e',
+            yellow: '#eab308',
+            pink: '#ec4899',
+            brown: '#8b5e3c',
+            purple: '#a855f7',
+            orange: '#f97316',
+            gold: '#d4af37',
+            silver: '#c0c0c0'
+        };
+        if (map[s]) return map[s];
+
+        // Common Arabic color names.
+        const amap = {
+            'احمر': '#ef4444',
+            'أحمر': '#ef4444',
+            'ازرق': '#3b82f6',
+            'أزرق': '#3b82f6',
+            'اسود': '#111827',
+            'أسود': '#111827',
+            'ابيض': '#f9fafb',
+            'أبيض': '#f9fafb',
+            'رمادي': '#9ca3af',
+            'اخضر': '#22c55e',
+            'أخضر': '#22c55e',
+            'اصفر': '#eab308',
+            'أصفر': '#eab308',
+            'وردي': '#ec4899',
+            'بني': '#8b5e3c',
+            'بنفسجي': '#a855f7',
+            'برتقالي': '#f97316'
+        };
+        if (amap[raw]) return amap[raw];
+
+        return null;
+    }
+
+    function setActiveColorChip(color) {
+        const $wrap = $('#colorOptions');
+        if (!$wrap.length) return;
+
+        const target = (color || '').trim();
+        $wrap.find('.js-color-chip').each(function(){
+            const $btn = $(this);
+            const btnColor = String($btn.data('color') || '').trim();
+            const isActive = btnColor === target;
+            $btn.toggleClass('is-active', isActive);
+            $btn.attr('aria-pressed', isActive ? 'true' : 'false');
+        });
+    }
+
+    function renderColorChips(variants, colorsFallback) {
+        const $wrap = $('#colorOptions');
+        if (!$wrap.length) return;
+
+        $wrap.empty();
+
+        const chips = [];
+        if (Array.isArray(variants) && variants.length) {
+            variants.forEach(function(v){
+                chips.push({
+                    color: v.color || 'Default',
+                    variant_id: v.id || '',
+                    image: v.image || ''
+                });
+            });
+        } else if (Array.isArray(colorsFallback) && colorsFallback.length) {
+            colorsFallback.forEach(function(c){
+                chips.push({ color: c, variant_id: '', image: '' });
+            });
+        }
+
+        // Render unique items (avoid duplicates).
+        const seen = new Set();
+        chips.forEach(function(c){
+            const key = [c.color, c.variant_id, c.image].join('|');
+            if (seen.has(key)) return;
+            seen.add(key);
+
+            const $btn = $('<button type="button" class="color-chip js-color-chip" aria-pressed="false"></button>');
+            $btn.attr('data-color', c.color);
+            if (c.variant_id) $btn.attr('data-variant-id', c.variant_id);
+            if (c.image) $btn.attr('data-image', c.image);
+
+            const $dot = $('<span class="color-dot" aria-hidden="true"></span>');
+            const cssColor = colorLabelToCss(c.color);
+            if (cssColor) $dot.css('background', cssColor);
+
+            const $label = $('<span class="color-chip-label"></span>').text(c.color);
+            $btn.append($dot, $label);
+            $wrap.append($btn);
+        });
+
+        setActiveColorChip($('#color').val());
+    }
 $(document).on('click', '.js-show-modal1', function(e){
         e.preventDefault();
 

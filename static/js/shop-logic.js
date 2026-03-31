@@ -41,12 +41,6 @@
             
             let amount = $("#amount").val() || 1;
             let color = $("#color").val();
-            let size = $("#size").val();
-
-            if (size === "Choose an option") {
-                swal("Please choose a size", "", "error");
-                return;
-            }
 
             fetch("/add-to-cart", {
                 method: "POST",
@@ -56,7 +50,6 @@
                     variant_id: variantId,
                     amount: amount,
                     color: color,
-                    size: size,
                 }),
             })
             .then(res => res.json())

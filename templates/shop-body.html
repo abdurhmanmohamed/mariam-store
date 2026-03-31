@@ -202,25 +202,8 @@
 
               <!--  -->
               <div class="p-t-33">
-                <div class="flex-w flex-r-m p-b-10">
-                  <div class="size-203 flex-c-m respon6">Size</div>
-
-                  <div class="size-204 respon6-next">
-                    <div class="rs1-select2 bor8 bg0">
-                      <select class="js-select2" name="time" id="size">
-                        <option>Choose an option</option>
-                        <option>55-65 Kg</option>
-                        <option>65-75 Kg</option>
-                        <option>75-85 Kg</option>
-                        <option>85-95 Kg</option>
-                      </select>
-                      <div class="dropDownSelect2"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="flex-w flex-r-m p-b-10">
-                  <div class="size-203 flex-c-m respon6">Color</div>
+                <div class="flex-w flex-c-m p-b-10">
+                  <div class="size-203 flex-c-m respon6 p-b-10 w-full text-center">Color</div>
 
                   <div class="size-204 respon6-next">
                     <div
@@ -248,17 +231,12 @@
                       ></div>
                     </div>
                     <!-- Rendered by static/js/main.js (shows all colors as clickable chips) -->
-                    <div
-                      id="colorOptions"
-                      class="color-chip-list"
-                      dir="auto"
-                    ></div>
+                    <div id="colorOptions" class="color-chip-list d-flex justify-content-center flex-wrap" dir="auto"></div>
                   </div>
                 </div>
 
-                <div class="flex-w flex-r-m p-b-10">
-                  <div class="size-204 flex-w flex-m respon6-next">
-                    <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+                <div class="flex-w flex-c-m p-b-20 pt-3">
+                    <div class="wrap-num-product flex-w m-tb-10">
                       <div
                         class="input-group quantity-box"
                         style="width: 140px"
@@ -286,10 +264,11 @@
                       </div>
                     </div>
 
-                    <div class="flex-column w-full m-tb-10">
+                    <div class="flex-column flex-c-m w-full m-tb-10">
                       <button
                         class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
                         id="add-cart"
+                        style="max-width: 250px;"
                       >
                         Add to cart
                       </button>
@@ -392,6 +371,7 @@
               ></textarea>
 
               <!-- COLORS -->
+              <!-- COLORS -->
               <div class="mb-3">
                 <label class="form-label">Colors</label>
 
@@ -413,8 +393,6 @@
                   <button class="btn btn-dark" id="addColor">Add</button>
                 </div>
               </div>
-
-              <!-- SAVE -->
               <button class="btn btn-success w-100 mt-3" id="saveItem">
                 Save Product
               </button>

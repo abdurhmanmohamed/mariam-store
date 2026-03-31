@@ -21,9 +21,18 @@
       href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
     />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css"
+    />
 
     <link
       rel="stylesheet"
@@ -147,7 +156,7 @@
         border-radius: 4px 4px 0 0;
       }
       .tab-btn[data-target="orders"]::before {
-        background: linear-gradient(135deg, #FBCBDB, #F7B5C3);
+        background: linear-gradient(135deg, #fbcbdb, #f7b5c3);
       }
       .tab-btn[data-target="packaged"]::before {
         background: linear-gradient(135deg, #f59e0b, #d97706);
@@ -296,7 +305,7 @@
       }
 
       .content::-webkit-scrollbar-thumb {
-        background: #FBCBDB;
+        background: #fbcbdb;
         border-radius: 20px;
       }
 
@@ -349,7 +358,7 @@
         box-shadow: 0 14px 28px rgba(239, 68, 68, 0.4);
       }
       .manage-shipping {
-        background: linear-gradient(135deg, #F7B5C3, #FBCBDB);
+        background: linear-gradient(135deg, #f7b5c3, #fbcbdb);
         box-shadow: 0 8px 20px rgba(251, 203, 219, 0.25);
       }
       .manage-shipping:hover {
@@ -362,7 +371,7 @@
         border-radius: 10px;
         border: none;
         font-weight: 700;
-        font-family: 'Cairo', sans-serif;
+        font-family: "Cairo", sans-serif;
         font-size: 0.85rem;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -370,7 +379,7 @@
         align-items: center;
         gap: 6px;
         color: white !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
@@ -384,17 +393,25 @@
       }
 
       .order-btn.btn-shipped {
-        background: linear-gradient(135deg, #FFB75E, #ED8F03); /* Amber/Sunset */
+        background: linear-gradient(
+          135deg,
+          #ffb75e,
+          #ed8f03
+        ); /* Amber/Sunset */
         box-shadow: 0 6px 15px rgba(237, 143, 3, 0.25);
       }
 
       .order-btn.btn-delivered {
-        background: linear-gradient(135deg, #42E695, #3BB2B8); /* Emerald/Teal */
+        background: linear-gradient(
+          135deg,
+          #42e695,
+          #3bb2b8
+        ); /* Emerald/Teal */
         box-shadow: 0 6px 15px rgba(59, 178, 184, 0.25);
       }
 
       .order-btn.btn-returned {
-        background: linear-gradient(135deg, #FF5F6D, #FFC371); /* Rose/Orange */
+        background: linear-gradient(135deg, #ff5f6d, #ffc371); /* Rose/Orange */
         box-shadow: 0 6px 15px rgba(255, 95, 109, 0.25);
       }
 
@@ -619,7 +636,7 @@
       .item-amount {
         font-weight: 600;
         font-size: 15px;
-        color: #F7B5C3;
+        color: #f7b5c3;
       }
       .order-item {
         border: 1px solid #eef0ff;
@@ -916,7 +933,6 @@
 							<h4 class="item-name" style="font-family:  'Cairo', 'sans-serif';">${item.name}</h4>
 							<div class="item-meta">
 								<span style="font-family:  'Cairo', 'sans-serif';">${item.color}</span>
-								<span>${item.size}</span>
 							</div>
 						</div>
 

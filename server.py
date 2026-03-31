@@ -25,12 +25,11 @@ cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache', 'CACHE_DEFAULT_TIMEOUT':
 app.register_blueprint(analytics_bp)
 login_manager = LoginManager(app)
 app.secret_key='abdomohamed'
-# app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres.wmkfvadfdnjpmdurnudb:abdo-mohamed20@aws-1-eu-west-2.pooler.supabase.com:6543/postgres"
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres.lxelklwgirketewzssix:abdo-mohamed20@aws-1-eu-west-1.pooler.supabase.com:6543/postgres"   #delete it
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
-SUPABASE_URL = "https://wmkfvadfdnjpmdurnudb.supabase.co"
-SUPABASE_KEY = "sb_publishable_aCVfYc4k1oCSUl3twmfjVA_iSlR3gy6"
-BUCKET = "items"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres.faossrhfekblsmausrte:Romaire_marim@aws-1-eu-central-1.pooler.supabase.com:6543/postgres"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mariam.db"
+SUPABASE_URL = "https://faossrhfekblsmausrte.supabase.co"
+SUPABASE_KEY = "sb_publishable_7JDEtxYatAQwFn7cpfZW9w_ED6fTnhX"
+BUCKET = "Romaire"
 login_manager.login_view = 'login'
 class Base(DeclarativeBase):
     pass
@@ -94,7 +93,7 @@ class Cart(db.Model):
     name:Mapped[str] = mapped_column(String(150), nullable=False)
     price:Mapped[int] = mapped_column(Integer, nullable=False)
     amount:Mapped[int] = mapped_column(Integer, nullable=False)
-    size:Mapped[str] = mapped_column(String(150), nullable=False)
+    size:Mapped[str] = mapped_column(String(150), nullable=False, default="")
     session_id:Mapped[str] = mapped_column(String(100), nullable=True)  # Guest session tracking
     order_id:Mapped[str] = mapped_column(Integer, ForeignKey('order.id'), nullable=True)
     
@@ -104,7 +103,6 @@ class Cart(db.Model):
             "name": self.name,
             "img": self.img,
             "amount": self.amount,
-            "size": self.size,
             "color": self.color,
             "price": self.price,
         }
@@ -126,120 +124,7 @@ with app.app_context():
         print("Successfully added total_price column to order table!")
     except Exception as e:
         db.session.rollback()
-#     items=[
-#     {
-#         'name':"Coat",
-#         'description':"Springrain Men's Wool Blend Pea Coat Notched Collar Single Breasted Overcoat Warm Winter Trench Coat",
-#         'imgs':[
-#             'https://m.media-amazon.com/images/I/711NoFaDOJL._AC_SY500_.jpg',
-#             'https://m.media-amazon.com/images/I/71IR7Xg2Z4L._AC_SY500_.jpg',
-#             'https://m.media-amazon.com/images/I/61DWc7OqnPL._AC_SY500_.jpg',
-#             'https://m.media-amazon.com/images/I/61XNU3qvAdL._AC_SY500_.jpg',
-#             'https://m.media-amazon.com/images/I/71t5suDm+XL._AC_SY500_.jpg'
-#             ],
-#         'colors':['grey','black','havan'],
-#         'price' :13
 
-#     },
-#     {
-#         'name':"shirt",
-#         'description':"COOFANDY Men's Long Sleeve Button Down Shirt Wrinkle Free Untucked Dress Shirt Casual Denim Shirt",
-#         'imgs':[
-#             'https://m.media-amazon.com/images/I/81hn4NOLuPL._AC_SX425_.jpg',
-#             'https://m.media-amazon.com/images/I/71TM2Ds5ijL._AC_SX385_.jpg',
-#             'https://m.media-amazon.com/images/I/71qeTQ7iKfL._AC_SX385_.jpg',
-#             'https://m.media-amazon.com/images/I/71anSFX+J7L._AC_SX385_.jpg',
-#             'https://m.media-amazon.com/images/I/71CVxTEkJ4L._AC_SX385_.jpg'
-#             ],
-#         'colors':['blue','black','pink'],
-#         'price' :20
-#     },
-#     {
-#         'name':"T-shirt",
-#         'description':"Gildan Men's Crew T-Shirts, Multipack, Style G1100",
-#         'imgs':[
-#             'https://m.media-amazon.com/images/I/61Nn7FcOqBL._AC_SX522_.jpg',
-#             'https://m.media-amazon.com/images/I/61Q5js47DgL._AC_SX522_.jpg',
-#             'https://m.media-amazon.com/images/I/614VnOp0UGL._AC_SX522_.jpg',
-#             ],
-#         'colors':['black','white'],
-#         'price' :30
-#     },
-#     {
-#         'name':"pants",
-#         'description':"Gildan Men's Crew T-Shirts, Multipack, Style G1100",
-#         'imgs':[
-#             'https://m.media-amazon.com/images/I/71mkhtxkS+L._AC_SY500_.jpg',
-#             'https://m.media-amazon.com/images/I/81FlisHpMFL._AC_SX522_.jpg',
-#             'https://m.media-amazon.com/images/I/71U0eWjSJPL._AC_SX522_.jpg',
-#             ],
-#         'colors':['brown','black'],
-#         'price' :50
-#     },
-#     {
-#         'name':"Coat",
-#         'description':"Springrain Men's Wool Blend Pea Coat Notched Collar Single Breasted Overcoat Warm Winter Trench Coat",
-#         'imgs':[
-#             'https://m.media-amazon.com/images/I/711NoFaDOJL._AC_SY500_.jpg',
-#             'https://m.media-amazon.com/images/I/71IR7Xg2Z4L._AC_SY500_.jpg',
-#             'https://m.media-amazon.com/images/I/61DWc7OqnPL._AC_SY500_.jpg',
-#             'https://m.media-amazon.com/images/I/61XNU3qvAdL._AC_SY500_.jpg',
-#             'https://m.media-amazon.com/images/I/71t5suDm+XL._AC_SY500_.jpg'
-#             ],
-#         'colors':['grey','black','havan'],
-#         'price' :13
-
-#     },
-#     {
-#         'name':"shirt",
-#         'description':"COOFANDY Men's Long Sleeve Button Down Shirt Wrinkle Free Untucked Dress Shirt Casual Denim Shirt",
-#         'imgs':[
-#             'https://m.media-amazon.com/images/I/81hn4NOLuPL._AC_SX425_.jpg',
-#             'https://m.media-amazon.com/images/I/71TM2Ds5ijL._AC_SX385_.jpg',
-#             'https://m.media-amazon.com/images/I/71qeTQ7iKfL._AC_SX385_.jpg',
-#             'https://m.media-amazon.com/images/I/71anSFX+J7L._AC_SX385_.jpg',
-#             'https://m.media-amazon.com/images/I/71CVxTEkJ4L._AC_SX385_.jpg'
-#             ],
-#         'colors':['blue','black','pink'],
-#         'price' :20
-#     },
-#     {
-#         'name':"T-shirt",
-#         'description':"Gildan Men's Crew T-Shirts, Multipack, Style G1100",
-#         'imgs':[
-#             'https://m.media-amazon.com/images/I/61Nn7FcOqBL._AC_SX522_.jpg',
-#             'https://m.media-amazon.com/images/I/61Q5js47DgL._AC_SX522_.jpg',
-#             'https://m.media-amazon.com/images/I/614VnOp0UGL._AC_SX522_.jpg',
-#             ],
-#         'colors':['black','white'],
-#         'price' :30
-#     },
-#     {
-#         'name':"pants",
-#         'description':"Gildan Men's Crew T-Shirts, Multipack, Style G1100",
-#         'imgs':[
-#             'https://m.media-amazon.com/images/I/71mkhtxkS+L._AC_SY500_.jpg',
-#             'https://m.media-amazon.com/images/I/81FlisHpMFL._AC_SX522_.jpg',
-#             'https://m.media-amazon.com/images/I/71U0eWjSJPL._AC_SX522_.jpg',
-#             ],
-#         'colors':['brown','black'],
-#         'price' :50
-#     },
-
-# ]
-#     for item in items:
-#         item_obj = ItemDetails(name=item['name'], description=item['description'], price = item['price'])
-#         db.session.add(item_obj)
-#         db.session.commit()
-#         for item_col in item['colors']:
-#             item_color = ItemColor(color=item_col, item_id = item_obj.id)
-#             db.session.add(item_color)
-#             db.session.commit()
-        
-#         for item_img in item['imgs']:
-#             item_image = ItemImg(img=item_img, item_id = item_obj.id)
-#             db.session.add(item_image)
-#             db.session.commit()
 
 @login_manager.user_loader
 def userloader(user_id):
@@ -467,7 +352,6 @@ def add_to_cart():
                            color = data.get('color', ''),
                            price= item_with_id.price,
                            amount = int(data.get('amount', 1)),
-                           size = data.get('size', ''),
                            session_id=session['session_id'],
                            order_id=None  # Not assigned yet
                            )
@@ -737,6 +621,17 @@ def update_item(id):
     item.description = description
     item.old_price = int(old_price) if old_price else None
     item.discount_label = discount_label
+
+    # handle colors
+    colors = data.get("colors", [])
+    # Always clear then re-add if the field is present (to allow emptying)
+    if isinstance(colors, list):
+        ItemColor.query.filter_by(item_id=id).delete()
+        for color_name in colors:
+            clean_name = color_name.strip()
+            if clean_name:
+                new_c = ItemColor(color=clean_name, item_id=id)
+                db.session.add(new_c)
 
     # handle images here if needed
     image_links = []
