@@ -658,6 +658,318 @@
     </div>
     {% endif %}
 
+    <!-- ✨ Daily Motivational Quote Banner ✨ -->
+    <style>
+      /* ─── Dashboard Quote Banner ─────────────────────── */
+      .dash-quote-banner {
+        margin: 6px auto 0;
+        max-width: 900px;
+        padding: 0 15px;
+      }
+
+      .dash-quote-card {
+        position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        padding: 26px 50px 22px;
+        background: linear-gradient(135deg, #fff5f8 0%, #ffeef4 50%, #fff9ec 100%);
+        border: 1px solid rgba(251, 203, 219, 0.6);
+        box-shadow:
+          0 20px 60px rgba(251, 203, 219, 0.3),
+          0 4px 16px rgba(0,0,0,0.04);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0;
+      }
+
+      /* Soft glow orbs inside card */
+      .dash-quote-card::before {
+        content: '';
+        position: absolute;
+        top: -60px; right: -60px;
+        width: 220px; height: 220px;
+        background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+      .dash-quote-card::after {
+        content: '';
+        position: absolute;
+        bottom: -50px; left: -50px;
+        width: 200px; height: 200px;
+        background: radial-gradient(circle, rgba(251,203,219,0.5) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      /* Pill badge */
+      .dash-quote-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(212,175,55,0.12);
+        border: 1px solid rgba(212,175,55,0.35);
+        color: #b8952a;
+        font-family: 'Cairo', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 5px 16px;
+        border-radius: 50px;
+        margin-bottom: 22px;
+        position: relative;
+        z-index: 1;
+        animation: dqFadeDown 0.6s ease both;
+      }
+      .dash-quote-pill-star {
+        font-size: 10px;
+        animation: dqStar 2.5s ease-in-out infinite;
+        display: inline-block;
+      }
+      @keyframes dqStar {
+        0%, 100% { transform: scale(1) rotate(0deg); }
+        50%       { transform: scale(1.4) rotate(18deg); }
+      }
+
+      /* Big decorative quote mark */
+      .dash-quote-mark {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 7rem;
+        line-height: 0.6;
+        color: rgba(251, 203, 219, 0.7);
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+        user-select: none;
+        animation: dqFadeDown 0.6s ease 0.1s both;
+      }
+
+      /* Quote text */
+      .dash-quote-text {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.45rem;
+        font-weight: 400;
+        font-style: italic;
+        color: #3d2a35;
+        line-height: 1.65;
+        max-width: 680px;
+        margin: 0 0 20px;
+        position: relative;
+        z-index: 1;
+        transition: opacity 0.45s ease, transform 0.45s ease;
+        animation: dqFadeUp 0.7s ease 0.2s both;
+      }
+      .dash-quote-text.fading {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      /* Thin gold divider */
+      .dash-quote-divider {
+        width: 48px;
+        height: 1.5px;
+        background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        margin: 0 auto 16px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Author */
+      .dash-quote-author {
+        font-family: 'Cairo', sans-serif;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: #d4af37;
+        position: relative;
+        z-index: 1;
+        margin-bottom: 28px;
+        transition: opacity 0.45s ease;
+        animation: dqFadeUp 0.7s ease 0.3s both;
+      }
+      .dash-quote-author.fading { opacity: 0; }
+
+      /* Button row */
+      .dash-quote-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        position: relative;
+        z-index: 1;
+        animation: dqFadeUp 0.7s ease 0.4s both;
+      }
+
+      .dash-quote-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 22px;
+        border-radius: 50px;
+        border: 1.5px solid rgba(212,175,55,0.4);
+        background: transparent;
+        color: #b8952a;
+        font-family: 'Cairo', sans-serif;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .dash-quote-btn:hover {
+        background: rgba(212,175,55,0.1);
+        border-color: #d4af37;
+        box-shadow: 0 4px 16px rgba(212,175,55,0.2);
+        transform: translateY(-2px);
+      }
+      .dash-quote-btn svg {
+        width: 13px; height: 13px;
+        fill: currentColor;
+        transition: transform 0.35s ease;
+      }
+      .dash-quote-btn:hover svg { transform: rotate(180deg); }
+
+      /* Date tag */
+      .dash-quote-date {
+        font-family: 'Cairo', sans-serif;
+        font-size: 0.73rem;
+        color: rgba(61,42,53,0.35);
+        letter-spacing: 1px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Entrance animations */
+      @keyframes dqFadeDown {
+        from { opacity: 0; transform: translateY(-12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes dqFadeUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Responsive */
+      @media (max-width: 600px) {
+        .dash-quote-card { padding: 32px 22px 28px; }
+        .dash-quote-text { font-size: 1.15rem; }
+        .dash-quote-mark { font-size: 5rem; }
+      }
+    </style>
+
+    <div class="dash-quote-banner">
+      <div class="dash-quote-card">
+        <!-- Pill badge -->
+        <div class="dash-quote-pill">
+          <span class="dash-quote-pill-star">✦</span>
+          <span id="dash-day-label">Today's Inspiration</span>
+          <span class="dash-quote-pill-star">✦</span>
+        </div>
+
+        <!-- Big open-quote mark -->
+        <div class="dash-quote-mark">&ldquo;</div>
+
+        <!-- Quote text -->
+        <p class="dash-quote-text" id="dash-quote-text">Beauty begins the moment you decide to be yourself.</p>
+
+        <!-- Divider -->
+        <div class="dash-quote-divider"></div>
+
+        <!-- Author -->
+        <div class="dash-quote-author" id="dash-quote-author">— Coco Chanel</div>
+
+        <!-- Actions row -->
+        <div class="dash-quote-actions">
+          <button class="dash-quote-btn" id="dash-quote-next-btn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+            Another Quote
+          </button>
+          <div class="dash-quote-date" id="dash-quote-date"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        var quotes = [
+          { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+          { text: "Life is not measured by the number of breaths we take, but by the moments that take our breath away.", author: "Maya Angelou" },
+          { text: "Dream big. Start small. But most of all, start.", author: "Simon Sinek" },
+          { text: "Your time is limited — don't waste it living someone else's life.", author: "Steve Jobs" },
+          { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+          { text: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein" },
+          { text: "Don't watch the clock. Do what it does — keep going.", author: "Sam Levenson" },
+          { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+          { text: "You don't have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
+          { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+          { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+          { text: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+          { text: "Chase the vision, not the money. The money will end up following you.", author: "Tony Hsieh" },
+          { text: "Go confidently in the direction of your dreams. Live the life you've imagined.", author: "Henry David Thoreau" },
+          { text: "All our dreams can come true, if we have the courage to pursue them.", author: "Walt Disney" },
+          { text: "A dream doesn't become reality through magic — it takes sweat, determination, and hard work.", author: "Colin Powell" },
+          { text: "The biggest adventure you can take is to live the life of your dreams.", author: "Oprah Winfrey" },
+          { text: "Every moment is a fresh beginning.", author: "T.S. Eliot" },
+          { text: "Success is not final, failure is not fatal — it is the courage to continue that counts.", author: "Winston Churchill" },
+          { text: "You only live once, but if you do it right, once is enough.", author: "Mae West" },
+          { text: "The two most important days in your life are the day you are born and the day you find out why.", author: "Mark Twain" },
+          { text: "Fall seven times, stand up eight.", author: "Japanese Proverb" },
+          { text: "Turn your wounds into wisdom.", author: "Oprah Winfrey" },
+          { text: "The only person you are destined to become is the person you decide to be.", author: "Ralph Waldo Emerson" },
+          { text: "Stars can't shine without darkness.", author: "D.H. Sidebottom" },
+          { text: "One day, the things you are going through will become the story you tell to inspire others.", author: "Unknown" },
+          { text: "Do one thing every day that scares you.", author: "Eleanor Roosevelt" },
+          { text: "Keep your face always toward the sunshine, and shadows will fall behind you.", author: "Walt Whitman" },
+          { text: "You are never too old to set another goal or to dream a new dream.", author: "Clive Staples Lewis" },
+          { text: "Whatever you are, be a good one.", author: "Abraham Lincoln" },
+        ];
+
+        function getDayOfYear() {
+          var now = new Date();
+          var start = new Date(now.getFullYear(), 0, 0);
+          var diff = now - start + (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60000;
+          return Math.floor(diff / 86400000);
+        }
+
+        var idx = getDayOfYear() % quotes.length;
+
+        var textEl   = document.getElementById('dash-quote-text');
+        var authorEl = document.getElementById('dash-quote-author');
+        var dateEl   = document.getElementById('dash-quote-date');
+        var dayEl    = document.getElementById('dash-day-label');
+        var nextBtn  = document.getElementById('dash-quote-next-btn');
+
+        var now = new Date();
+        dateEl.textContent = now.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+        dayEl.textContent  = now.toLocaleDateString('en-US', { weekday:'long' }) + "'s Inspiration";
+
+        function setQuote(i) {
+          var q = quotes[i];
+          textEl.classList.add('fading');
+          authorEl.classList.add('fading');
+          setTimeout(function() {
+            textEl.textContent   = q.text;
+            authorEl.textContent = '— ' + q.author;
+            textEl.classList.remove('fading');
+            authorEl.classList.remove('fading');
+          }, 380);
+        }
+
+        setQuote(idx);
+
+        nextBtn.addEventListener('click', function() {
+          idx = (idx + 1) % quotes.length;
+          setQuote(idx);
+        });
+      })();
+    </script>
+
     <div class="dashboard">
       <div
         style="
