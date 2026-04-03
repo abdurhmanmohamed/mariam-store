@@ -17,7 +17,7 @@ from flask_login import LoginManager,UserMixin,login_user, login_required,curren
 from flask_compress import Compress
 from flask_caching import Cache
 from sqlalchemy.orm import joinedload
-
+import os
 app= Flask(__name__)
 Compress(app)
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache', 'CACHE_DEFAULT_TIMEOUT': 300})
@@ -25,11 +25,11 @@ cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache', 'CACHE_DEFAULT_TIMEOUT':
 # app.register_blueprint(analytics_bp)
 login_manager = LoginManager(app)
 app.secret_key='abdomohamed'
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres.faossrhfekblsmausrte:Romaire_marim@aws-1-eu-central-1.pooler.supabase.com:6543/postgres"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL") 
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mariam.db"
-SUPABASE_URL = "https://faossrhfekblsmausrte.supabase.co"
-SUPABASE_KEY = "sb_publishable_7JDEtxYatAQwFn7cpfZW9w_ED6fTnhX"
-BUCKET = "Romaire"
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+BUCKET = os.getenv("BUCKET")
 login_manager.login_view = 'login'
 class Base(DeclarativeBase):
     pass
